@@ -58,8 +58,8 @@ Stress and fatigue narrow attention, shrink working memory, push decisions towar
 No build step, no dependencies, no server. Open `app/index.html` in any modern browser, or:
 
 ```bash
-git clone https://github.com/ungaaaabungaaa/Stress-Monitoring-for-Pilots.git
-cd Stress-Monitoring-for-Pilots
+git clone https://github.com/ungaaaabungaaa/stress-monitoring-pilots.git
+cd stress-monitoring-pilots
 python3 -m http.server 8000
 # open http://localhost:8000/app/
 ```
