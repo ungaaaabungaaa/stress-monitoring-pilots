@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360" role="img" aria-label="Stress Monitoring for Pilots">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1e3f"/>
+      <stop offset="0.7" stop-color="#1f5fbf"/>
+      <stop offset="1" stop-color="#4f8fef"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f8a4c"/>
+      <stop offset="1" stop-color="#0f3d24"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b1e3f" stop-opacity="0.9"/>
+      <stop offset="0.55" stop-color="#0b1e3f" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#0b1e3f" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="round"><rect width="1200" height="360" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="1200" height="360" fill="url(#sky)"/>
+    <!-- horizon, banked 3 degrees like an attitude indicator -->
+    <g transform="rotate(-3 600 300)">
+      <rect x="-300" y="300" width="1800" height="400" fill="url(#ground)"/>
+      <rect x="-300" y="298" width="1800" height="3" fill="#ffffff" opacity="0.9"/>
+      <g stroke="#ffffff" stroke-width="2" opacity="0.5">
+        <line x1="900" y1="250" x2="1000" y2="250"/>
+        <line x1="925" y1="275" x2="975" y2="275"/>
+        <line x1="925" y1="325" x2="975" y2="325"/>
+      </g>
+    </g>
+    <!-- fixed aircraft symbol -->
+    <g stroke="#ffd166" stroke-width="5" stroke-linecap="round" fill="none">
+      <line x1="860" y1="300" x2="920" y2="300"/>
+      <line x1="980" y1="300" x2="1040" y2="300"/>
+      <circle cx="950" cy="300" r="7" fill="#ffd166"/>
+    </g>
+    <!-- heartbeat trace, upper right -->
+    <path d="M700 120 H780 L800 95 L820 150 L840 70 L860 140 L876 120 H1160" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>
+    <rect width="1200" height="360" fill="url(#fade)"/>
+    <text x="72" y="128" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="56" font-weight="800" fill="#ffffff">Stress Monitoring</text>
+    <text x="72" y="188" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="56" font-weight="800" fill="#ffffff">for Pilots</text>
+    <text x="74" y="232" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="21" fill="#dbe7ff">Assess. Understand. Decide safely.</text>
+    <text x="74" y="262" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="21" fill="#dbe7ff">Private, evidence-based, two minutes a day.</text>
+    <g>
+      <circle cx="84" cy="312" r="9" fill="#3ddc84"/>
+      <circle cx="112" cy="312" r="9" fill="#ffc53d"/>
+      <circle cx="140" cy="312" r="9" fill="#ff6b61"/>
+      <text x="162" y="318" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff" opacity="0.95">Green · Amber · Red readiness, with the reasons spelled out</text>
+    </g>
+  </g>
+</svg>

@@ -244,7 +244,12 @@
       const hh = { green: 30, amber: 55, red: 80 }[c.state];
       return `<rect x="${x + 1}" y="${h - hh}" width="${Math.max(bw - 2, 2)}" height="${hh}" rx="2" fill="${COLOR[c.state]}"><title>${fmtDateTime(c.at)}: ${c.state}</title></rect>`;
     }).join('');
-    const labels = recent.map((c, i) => (i % Math.ceil(recent.length / 6) === 0 ? `<text x="${pad + i * bw + 1}" y="${h + 14}" font-size="10" fill="var(--muted)">${fmtDate(c.at)}</text>` : '')).join('');
+    const labels = recent.map((c, i) => {
+      if (i % Math.ceil(recent.length / 6) !== 0) return '';
+      const x = pad + i * bw + 1;
+      const anchor = x > w - 40 ? 'end' : 'start';
+      return `<text x="${x}" y="${h + 14}" font-size="10" text-anchor="${anchor}" fill="var(--muted)">${fmtDate(c.at)}</text>`;
+    }).join('');
     el.innerHTML = `<svg viewBox="0 0 ${w} ${h + 18}" role="img" aria-label="Readiness over time">${bars}${labels}</svg>`;
   }
 
@@ -258,7 +263,12 @@
     const ticks = [opt.min, (opt.min + opt.max) / 2, opt.max].map((v) => `<text x="${pl - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="10" fill="var(--muted)">${v}</text><line x1="${pl}" x2="${w - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/>`).join('');
     const path = pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p.y).toFixed(1)}`).join(' ');
     const dots = pts.map((p, i) => `<circle cx="${X(i)}" cy="${Y(p.y)}" r="3" fill="var(--accent)"><title>${fmtDateTime(p.x)}: ${p.y}</title></circle>`).join('');
-    const labels = pts.map((p, i) => (i % Math.ceil(pts.length / 6) === 0 ? `<text x="${X(i)}" y="${h - 6}" text-anchor="middle" font-size="10" fill="var(--muted)">${fmtDate(p.x)}</text>` : '')).join('');
+    const labels = pts.map((p, i) => {
+      if (i % Math.ceil(pts.length / 6) !== 0) return '';
+      const x = X(i);
+      const anchor = x < pl + 20 ? 'start' : x > w - pr - 20 ? 'end' : 'middle';
+      return `<text x="${x}" y="${h - 6}" text-anchor="${anchor}" font-size="10" fill="var(--muted)">${fmtDate(p.x)}</text>`;
+    }).join('');
     el.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img">${bands}${ticks}<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2"/>${dots}${labels}</svg>`;
   }
 
@@ -272,7 +282,7 @@
     const all = series.flatMap((s) => s.pts);
     const t0 = Math.min(...all.map((p) => +new Date(p.x)));
     const t1 = Math.max(...all.map((p) => +new Date(p.x)));
-    const w = 600, h = 160, pl = 28, pr = 8, pt = 8, pb = 22, iw = w - pl - pr, ih = h - pt - pb;
+    const w = 600, h = 160, pl = 36, pr = 8, pt = 8, pb = 22, iw = w - pl - pr, ih = h - pt - pb;
     const X = (iso) => pl + (t1 === t0 ? iw / 2 : ((+new Date(iso) - t0) / (t1 - t0)) * iw);
     const Y = (v) => pt + ih - Math.min(Math.max(v, 0), 1) * ih;
     const bands = `<rect x="${pl}" y="${Y(1)}" width="${iw}" height="${Y(0.675) - Y(1)}" fill="${COLOR.red}" opacity="0.12"/><rect x="${pl}" y="${Y(0.675)}" width="${iw}" height="${Y(0.35) - Y(0.675)}" fill="${COLOR.amber}" opacity="0.12"/>`;
