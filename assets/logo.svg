@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f5fbf"/>
+      <stop offset="1" stop-color="#1f8a4c"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#g)"/>
+  <!-- attitude-indicator horizon -->
+  <circle cx="64" cy="64" r="40" fill="#0f1419" opacity="0.35"/>
+  <clipPath id="c"><circle cx="64" cy="64" r="40"/></clipPath>
+  <g clip-path="url(#c)">
+    <rect x="24" y="24" width="80" height="40" fill="#7fb6ff"/>
+    <rect x="24" y="64" width="80" height="40" fill="#8a5a2b"/>
+    <rect x="24" y="63" width="80" height="2" fill="#fff"/>
+  </g>
+  <!-- heartbeat trace -->
+  <path d="M26 64 H46 L52 50 L58 78 L64 56 L70 68 L76 64 H102" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#fff" stroke-width="4"/>
+</svg>

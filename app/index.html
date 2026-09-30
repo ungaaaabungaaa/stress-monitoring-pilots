@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stress Monitoring for Pilots</title>
+  <meta name="description" content="A simple, private pre-flight stress and readiness check for pilots.">
+  <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>Stress Monitoring for Pilots</h1>
+        <p class="tagline">Assess. Understand. Decide safely.</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab is-active" role="tab" aria-selected="true" data-tab="checkin">Check-in</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="pss">Stress scale</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dashboard">Dashboard</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="about">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===================== CHECK-IN ===================== -->
+    <section id="tab-checkin" class="panel is-active" role="tabpanel">
+      <div class="intro">
+        <h2>Pre-flight check-in</h2>
+        <p>About two minutes. Answer honestly. The result is for you, and it stays on this device.</p>
+      </div>
+
+      <form id="checkin-form" novalidate>
+        <fieldset class="card">
+          <legend>1. IM SAFE checklist</legend>
+          <p class="hint">Tick anything that applies right now.</p>
+          <div class="checks">
+            <label><input type="checkbox" name="imsafe" value="illness"><span><strong>I</strong>llness. I have symptoms that could affect my performance.</span></label>
+            <label><input type="checkbox" name="imsafe" value="medication"><span><strong>M</strong>edication. I am taking medication that could impair me or that has not been cleared.</span></label>
+            <label><input type="checkbox" name="imsafe" value="stress"><span><strong>S</strong>tress. I am under pressure (work, family, money, health) that is on my mind.</span></label>
+            <label><input type="checkbox" name="imsafe" value="alcohol"><span><strong>A</strong>lcohol. I have had alcohol within the last 8 hours, or I still feel its effects.</span></label>
+            <label><input type="checkbox" name="imsafe" value="fatigue"><span><strong>F</strong>atigue. I feel tired or not adequately rested.</span></label>
+            <label><input type="checkbox" name="imsafe" value="emotion"><span><strong>E</strong>motion. I am emotionally upset (anger, grief, anxiety) in a way that could distract me.</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>2. Sleep and fatigue</legend>
+          <div class="grid-2">
+            <label class="field">
+              <span>Hours slept in the last 24 hours</span>
+              <input type="number" name="sleep" min="0" max="16" step="0.5" value="7" required>
+            </label>
+            <label class="field">
+              <span>Hours awake at start of duty</span>
+              <input type="number" name="awake" min="0" max="36" step="0.5" value="2" required>
+            </label>
+          </div>
+          <div class="field">
+            <span>How do you feel right now? (Samn-Perelli scale)</span>
+            <div class="scale" role="radiogroup" aria-label="Samn-Perelli fatigue scale">
+              <label><input type="radio" name="sp" value="1"><span>1<small>Fully alert, wide awake</small></span></label>
+              <label><input type="radio" name="sp" value="2"><span>2<small>Very lively, responsive</small></span></label>
+              <label><input type="radio" name="sp" value="3" checked><span>3<small>Okay, somewhat fresh</small></span></label>
+              <label><input type="radio" name="sp" value="4"><span>4<small>A little tired, less than fresh</small></span></label>
+              <label><input type="radio" name="sp" value="5"><span>5<small>Moderately tired, let down</small></span></label>
+              <label><input type="radio" name="sp" value="6"><span>6<small>Extremely tired, very difficult to concentrate</small></span></label>
+              <label><input type="radio" name="sp" value="7"><span>7<small>Completely exhausted, unable to function</small></span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>3. Perceived stress (PSS-4)</legend>
+          <p class="hint">In the last month, how often have you…</p>
+          <div id="pss4-items" class="likert-list"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>4. Anything else?</legend>
+          <label class="field">
+            <span>Notes (optional, private)</span>
+            <textarea name="notes" rows="2" placeholder="e.g. late arrival last night, difficult conversation this morning…"></textarea>
+          </label>
+        </fieldset>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">Get my readiness</button>
+          <button type="reset" class="btn">Clear</button>
+        </div>
+      </form>
+
+      <section id="result" class="result" hidden aria-live="polite"></section>
+    </section>
+
+    <!-- ===================== PSS-10 ===================== -->
+    <section id="tab-pss" class="panel" role="tabpanel">
+      <div class="intro">
+        <h2>Perceived Stress Scale (PSS-10)</h2>
+        <p>A validated ten-item measure of how stressful you have found your life over the past month. Do this about once a week.</p>
+      </div>
+      <form id="pss-form" novalidate>
+        <div class="card">
+          <p class="hint">In the last month, how often have you…</p>
+          <div id="pss10-items" class="likert-list"></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary">Score it</button>
+          <button type="reset" class="btn">Clear</button>
+        </div>
+      </form>
+      <section id="pss-result" class="result" hidden aria-live="polite"></section>
+    </section>
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section id="tab-dashboard" class="panel" role="tabpanel">
+      <div class="intro">
+        <h2>Dashboard</h2>
+        <p>Your last 30 check-ins. Look for trends, not single days.</p>
+      </div>
+      <div id="stats" class="stats"></div>
+      <div class="card chart-card">
+        <h3>Readiness</h3>
+        <div id="chart-readiness" class="chart"></div>
+      </div>
+      <div class="grid-2">
+        <div class="card chart-card">
+          <h3>Sleep (hours)</h3>
+          <div id="chart-sleep" class="chart"></div>
+        </div>
+        <div class="card chart-card">
+          <h3>Fatigue (Samn-Perelli)</h3>
+          <div id="chart-fatigue" class="chart"></div>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <h3>Perceived stress</h3>
+        <p class="hint">PSS-4 from daily check-ins (0 to 16) and PSS-10 weekly scores (0 to 40).</p>
+        <div id="chart-stress" class="chart"></div>
+      </div>
+      <div class="card">
+        <h3>History</h3>
+        <div class="table-wrap">
+          <table id="history">
+            <thead><tr><th>Date</th><th>Readiness</th><th>Sleep</th><th>Fatigue</th><th>PSS-4</th><th>Flags</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="actions">
+          <button id="export" class="btn">Export JSON</button>
+          <label class="btn file-btn">Import JSON<input id="import" type="file" accept="application/json" hidden></label>
+          <button id="wipe" class="btn danger">Delete all data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="tab-about" class="panel" role="tabpanel">
+      <div class="intro">
+        <h2>About this tool</h2>
+      </div>
+      <div class="card prose">
+        <p><strong>Purpose.</strong> Stress and fatigue degrade attention, decision-making and communication in the cockpit. This tool gives pilots a quick, structured way to notice when they are drifting toward an unsafe state, and to see patterns over time.</p>
+        <p><strong>What it is built on.</strong> The FAA IM SAFE personal checklist, the Samn-Perelli fatigue scale used in aviation fatigue research, and the Perceived Stress Scale (Cohen, Kamarck &amp; Mermelstein, 1983). The scoring rules are simple and transparent. See the research documents in the repository for the evidence and the reasoning.</p>
+        <p><strong>What it is not.</strong> It is not a medical device, not a diagnostic instrument, and not a substitute for an aviation medical examiner, a fatigue risk management system, or professional mental-health care. A Green result does not certify fitness; a Red result is an invitation to stop and think, and to talk to someone.</p>
+        <p><strong>Privacy.</strong> All data is stored only in this browser's local storage. Nothing is sent anywhere. Use Export if you want to keep a copy, and Delete all data if you want it gone.</p>
+        <p><strong>If you need help now.</strong> If you are thinking about harming yourself, contact your local emergency number or a crisis line immediately. Many airlines and pilot associations run confidential peer support programmes. Reaching out is a sign of good judgement, not weakness.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Stress Monitoring for Pilots. Local-only, open source, not a medical device.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
